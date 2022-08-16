@@ -10,6 +10,9 @@ let previous = 0;
 let insertedNumber = '0';
 let savedOperation = '';
 
+let startedMode = false;
+let clearedMode = false;
+
 
 displayableButtons.forEach(element => {
     if(isANumberRegex.test(element.textContent.trim()))
@@ -21,10 +24,15 @@ displayableButtons.forEach(element => {
 
 onButton.addEventListener('click', function(e) {
     display.textContent = 'Started';
+    startedMode = true;
 });
 
 clearButton.addEventListener('click', function(e) {
     display.textContent = '0';
+    previous = 0;
+    insertedNumber = 0;
+
+    clearedMode = true;
 })
 
 displayableButtons.forEach((button) => {
@@ -34,7 +42,14 @@ displayableButtons.forEach((button) => {
 
         if(isANumberRegex.test(textContent)) {
             insertedNumber += textContent;
-            showOnDisplay(textContent);
+
+            if(startedMode || clearedMode) {
+                showOnDisplay(textContent, true);
+                startedMode = false;
+                clearedMode = false;
+            }
+            else 
+                showOnDisplay(textContent);
         }
 
         if(signOfOperationRegex.test(textContent)) {
@@ -46,6 +61,7 @@ displayableButtons.forEach((button) => {
                showOnDisplay(result, true);
             }
 
+            
             else {
                 previous = insertedNumber;
                 insertedNumber = '';
