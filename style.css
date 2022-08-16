@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+body {
+    background-image: url('math.jpg');
+    object-fit: contain;
+    width: 2000px;
+    height: 1000px;
+}
+
 .calculator {
     width: 500px;
     height: 700px;
@@ -21,16 +28,26 @@
 
 }
 
-.display {
+#display {
    width: 400px;
    height: 100px;
    margin: 0 auto;
    margin-top: 10px;
+   padding: 50px;
 
    border: 1px solid black;
    border-radius: 2px;
    background-color: #FFFFC7;
    opacity: 0.8;
+
+   font-size: 32px;
+   font-family: 'Ubuntu', sans-serif;
+   letter-spacing: -3px;
+
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   
 }
 
 .row {
@@ -40,7 +57,7 @@
 
 .row > button {
     color: white;
-    background-color: #AF1B3F;
+    background-color: #D81159;
     box-shadow: 1px 2px rgb(0, 0, 0);
     border: none;
 
@@ -54,7 +71,7 @@
     cursor: pointer;
 }
 
-.row > button:active {
+.active, .row > button:active {
     background-color: #FFFFC7;
     color: black;
 }
