@@ -1,17 +1,11 @@
 const display = document.getElementById('display');
 const onButton = document.getElementById('on');
 const clearButton = document.getElementById('clear');
+const cancelButton = document.getElementById('cancel');
 const displayableButtons = Array.from(document.getElementsByTagName('button'));
 
 const signOfOperationRegex = /^[\/\x\-\+\=\%\√]|(x!)$/
 const isANumberRegex = /^\d$/
-
-let previous = 0;
-let insertedNumber = '0';
-let savedOperation = '';
-
-let startedMode = false;
-let clearedMode = false;
 
 
 displayableButtons.forEach(element => {
@@ -19,66 +13,11 @@ displayableButtons.forEach(element => {
         element.style.backgroundColor = '#690375';
 
     if(signOfOperationRegex.test(element.textContent.trim()))
-        element.style.backgroundColor = '#A59132';
+        element.style.backgroundColor = 'rgb(205 181 69)';
 });
 
-onButton.addEventListener('click', function(e) {
-    display.textContent = 'Started';
-    startedMode = true;
-});
 
-clearButton.addEventListener('click', function(e) {
-    display.textContent = '0';
-    previous = 0;
-    insertedNumber = 0;
 
-    clearedMode = true;
-})
-
-displayableButtons.forEach((button) => {
-    button.addEventListener('click', function(e) {
-        
-        let textContent = button.textContent.trim();
-
-        if(isANumberRegex.test(textContent)) {
-            insertedNumber += textContent;
-
-            if(startedMode || clearedMode) {
-                showOnDisplay(textContent, true);
-                startedMode = false;
-                clearedMode = false;
-            }
-            else 
-                showOnDisplay(textContent);
-        }
-
-        if(signOfOperationRegex.test(textContent)) {
-
-            if(textContent === '=') {
-               previous = parseInt(previous);
-               insertedNumber = parseInt(insertedNumber);
-               let result = operate(previous, insertedNumber, savedOperation);
-               showOnDisplay(result, true);
-            }
-
-            
-            else {
-                previous = insertedNumber;
-                insertedNumber = '';
-                savedOperation = textContent;
-                showOnDisplay(' ' + textContent + ' ');
-            }
-            
-        }
-    });
-});
-
-function showOnDisplay(element, wholeCancel = false) {
-    if(wholeCancel)
-        display.textContent = element;
-    else 
-        display.textContent +=  element;
-}
 
 let sum = (a, b) => a + b;
 let subtract = (a, b) => a - b;
